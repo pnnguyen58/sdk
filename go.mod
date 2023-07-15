@@ -1,4 +1,4 @@
-module sdk
+module github.com/pnnguyen58/sdk
 
 go 1.20
 
