@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package go_temporal;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "sdk/proto/example/;example";
+
+message Example {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  google.protobuf.Timestamp createdAt = 4;
+}
+
+message ExampleCreateRequest {
+  string name = 1;
+  string description = 2;
+}
+
+message ExampleCreateResponse {
+  Example data = 1;
+}
+
+message ExampleUpdateRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message ExampleUpdateResponse {
+  Example data = 1;
+}
+
+message ExampleGetRequest {
+  string id = 1;
+}
+
+message ExampleGetResponse {
+  Example data = 1;
+}
+
+message ExampleGetAllRequest {
+}
+
+message ExampleGetAllResponse {
+  repeated Example data = 1;
+}
+
+message ExampleDeleteRequest {
+  string id = 1;
+}
+
+message ExampleDeleteResponse {
+  bool data = 1;
+}
+
+service ExampleService {
+  // User request group
+  rpc CreateExample(ExampleCreateRequest) returns (ExampleCreateResponse) {
+    option (google.api.http) = {
+      post: "/examples"
+      body: "*"
+    };
+  }
+  rpc GetExample(ExampleGetRequest) returns (ExampleGetResponse) {
+    option (google.api.http) = {
+      get: "/examples/{id}"
+    };
+  }
+  rpc GetAllExample(ExampleGetAllRequest) returns (ExampleGetAllResponse) {
+    option (google.api.http) = {
+      get: "/examples"
+    };
+  }
+  rpc UpdateExample(ExampleUpdateRequest) returns (ExampleUpdateResponse) {
+    option (google.api.http) = {
+      put: "/examples/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteExample(ExampleDeleteRequest) returns (ExampleDeleteResponse) {
+    option (google.api.http) = {
+      delete: "/examples/{id}"
+    };
+  }
+}
